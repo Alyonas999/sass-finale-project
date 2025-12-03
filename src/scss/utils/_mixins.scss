@@ -1,33 +1,39 @@
 @use 'sass:map';
 @use 'sass:list';
 
-@use '../utils/variables' as var;
+@use 'variables' as var;
 @use 'functions' as fn;
 
+
 @mixin mg($bp: 'sm', $type: 'min', $is-retina: false) {
+  
+  $width: null;
+
   @if map.has-key(var.$breakpoints, $bp) {
     $width: map.get(var.$breakpoints, $bp);
   } @else {
-    @error "Breakpoint `#{$bp}` не найден !";
+    @error "Breakpoint `#{$bp}` не найден!";
   }
+
 
   @if $type == 'max' {
     $width: $width - 0.02px;
   }
 
-  @media only screen and (#{$type}-width: $width) {
-    @if $is-retina {
-      @media 
-        (min-device-pixel-ratio: 2),
-        (min-resolution: 192dpi),
-        (min-resolution: 2dppx) {
-        @content;
-      }
-    } @else {
-      @content;
-    }
+  
+  $query: "(#{$type}-width: #{$width})";
+
+ 
+  @if $is-retina {
+    $query: "#{$query} and ((min-device-pixel-ratio: 2) or (min-resolution: 192dpi) or (min-resolution: 2dppx))";
+  }
+
+
+  @media only screen and #{$query} {
+    @content;
   }
 }
+
 
 @mixin frame($width, $height: $width, $is-circle: false) {
   width: $width;
@@ -44,6 +50,7 @@
   }
 }
 
+
 @mixin scroll-bar {
   &::-webkit-scrollbar {
     width: 14px;
@@ -53,10 +60,10 @@
     background-color: transparent;
     border-radius: 100px;
 
-  &:hover {
-    background-color: rgba(#fff, 0, 3);
-  }
+    &:hover {
+      background-color: rgba(#fff, 0, 0.03);
     }
+  }
 
   &::-webkit-scrollbar-thumb {
     background-color: fn.get-color('light-secondary');
@@ -70,11 +77,11 @@
   }
 }
 
+
 @mixin ease($ease, $properties...) {
   @if map.has-key(var.$easings, $ease) {
-    $ease: map.get(var.$easings, $ease);
-    
-    transition: $ease;
+    $ease-value: map.get(var.$easings, $ease);
+    transition: $ease-value;
   } @else {
     @warn "The variable $ease is not defined";
   }
