@@ -5,7 +5,7 @@
    @use "../utils/mixins" as mx;
 
 .main {
-    display: grit;
+    display: grid;
     gap:40px;
     padding: 16px;
     grid-template-areas: 
@@ -18,12 +18,13 @@
   @include mx.mg('md') {
     gap: 36px;
     padding: 36px;
+
     grid-template-columns: repeat(2, 1fr);
     grid-template-areas: 
     'welcome welcome'
     'co-workers co-workers'
     'tasks reports';
-    grid-area: main;
+   
     }
 
  //desktop

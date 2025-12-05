@@ -20,14 +20,11 @@
     $width: $width - 0.02px;
   }
 
-  
   $query: "(#{$type}-width: #{$width})";
-
  
   @if $is-retina {
     $query: "#{$query} and ((min-device-pixel-ratio: 2) or (min-resolution: 192dpi) or (min-resolution: 2dppx))";
   }
-
 
   @media only screen and #{$query} {
     @content;
@@ -61,7 +58,7 @@
     border-radius: 100px;
 
     &:hover {
-      background-color: rgba(#fff, 0, 0.03);
+      background-color: rgba(#fff, 0.3);
     }
   }
 
