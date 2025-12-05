@@ -7,6 +7,9 @@ import { fileURLToPath } from "url";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 
 export default defineConfig({
+
+ base: "/sass-finale-project/",
+
   plugins: [
     ViteImageOptimizer({
       png: {
